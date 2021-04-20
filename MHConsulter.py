@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-import pymongo
+from pymongo import MongoClient
 import requests as peticion
 import json
 
@@ -12,12 +12,26 @@ class Monstruo():
         self.resistencia = resistencia
         self.descripcion = descripcion
 
+    def __str__(self) -> str:
+        self.cadena = "Nombre: {}\n".format(self.nombre)
+        self.cadena += "Debilidades: {}\n".format(self.debilidades)
+        self.cadena += "resistencia: {}\n".format(self.resistencia)
+        self.cadena += "descripción: {}\n".format(self.descripcion)
+        return self.cadena
+
 # Interfaces
+
+class MHConnector(ABC):
+    host = "localhost"
+    port = 27017
+    MongoClient(host,port)
 
 class MHConsulter(ABC):
 
     @abstractmethod
     def getMonsterByName(self, nombre:str) -> Monstruo:
+        conector = MHConnector()
+
         pass
 
     @abstractmethod
@@ -32,6 +46,10 @@ class MHRecorder(ABC):
 
     @abstractmethod
     def setMonstruo(self, monstruo:Monstruo) -> bool:
+        pass
+
+    @abstractmethod
+    def checkIfExist(self, monstruo:Monstruo) -> bool:
         pass
 
 class MHWatcher(ABC):
