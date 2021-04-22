@@ -63,8 +63,11 @@ class MHRecorderGuardador(MHRecorder):
     def getRandomMonster(self):
         id = random.randint(1,60)
         respuesta = requests.get("https://mhw-db.com/monsters/{}".format(id))
+        respuesta = respuesta.text
+        respuesta = json.loads(respuesta)
+        #print(respuesta)
         nombre = respuesta["name"]
-        debilidades = respuesta["weakness"]
+        debilidades = respuesta["weaknesses"]
         resistencias = respuesta["resistances"]
         descripcion = respuesta["description"]
         monstruo = Monstruo(nombre,debilidades,resistencias,descripcion)
