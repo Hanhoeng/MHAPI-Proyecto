@@ -1,11 +1,11 @@
-from PruebasField import *
+from Pruebas_nada_serio.PruebasField import *
 import json
 
 '''
 a y b se deben de arreglar porque esta raro, creo que igual no más llamando getAilment()
 se arma el request
 '''
-a = constructorURLConsulta()
+a = 
 b = getAilment("1")
 #print(b)
 '''
