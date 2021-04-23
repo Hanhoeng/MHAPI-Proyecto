@@ -28,9 +28,19 @@ class Monstruo():
         self.comentario = comentario
 
     def __str__(self) -> str:
+        cadDebilidades = ""
+        cadResistencias = ""
+        for i in self.debilidades:
+            cadDebilidades+="\t{}\n".format(i)
+
+        for i in self.resistencia:
+            cadResistencias += "\t{}\n".format(i)
+
+        #print(cadDebilidades)
+
         self.cadena = "Nombre:\n\t{}\n".format(self.nombre)
-        self.cadena += "Debilidades:\n{}".format(self.debilidades)
-        self.cadena += "Resistencias:\n{}".format(self.resistencia)
+        self.cadena += "Debilidades:\n{}".format(cadDebilidades)
+        self.cadena += "Resistencias:\n{}".format(cadResistencias)
         self.cadena += "Descripción:\n\t{}\n".format(self.descripcion)
         self.cadena += "Comentario:\n\t{}\n".format(self.comentario)
         return self.cadena
@@ -78,16 +88,15 @@ class MHRecorderGuardador(MHRecorder):
         respuesta = json.loads(respuesta)
         #print(respuesta)
         nombre = respuesta["name"]
-        debilidades = ""
+        debilidades = []
         for i in range(0,len(respuesta["weaknesses"])):
-            cadena1 = respuesta["weaknesses"][i]["element"]
-            cadena2 = "*"*respuesta["weaknesses"][i]["stars"]
-            debilidades += ("\t{}\t{}\n").format(cadena1,cadena2)
-        resistencias = ""
+            debilidades.append(respuesta["weaknesses"][i]["element"])
+        resistencias = []
         for i in range(0,len(respuesta["resistances"])):
-            resistencias += ("\t{}\n").format(respuesta["resistances"][i]["element"])
+            resistencias.append(respuesta["resistances"][i]["element"])
         descripcion = respuesta["description"]
         monstruo = Monstruo(nombre,debilidades,resistencias,descripcion)
+        
         return monstruo
 
     def setMonstruo(self, monstruo: Monstruo):
@@ -122,23 +131,13 @@ class MHRecorderGuardador(MHRecorder):
     def getSavedMonstruos(self):
         monstruos = []
         for i in self.col.find({}):
-            nombre = "Nombre:\n\t{}\n".format(i["Nombre"])
-            debilidades = "Debilidad:\n{}".format(i["Debilidades"])
-            resistencias = "Resistencias:\n{}".format(i["Resistencias"])
-            descripcion = "Descripcion:\n\t{}\n".format(i["Descripcion"])
-            comentario = "Comentario:\n\t{}\n".format(i["Comentario"])
-
-            cadena = ""
-            cadena += nombre
-            cadena += debilidades
-            cadena +=resistencias
-            cadena +=descripcion
-            cadena +=comentario
-            monstruos.append(cadena)
+            nombre = i["Nombre"]
+            debilidades = i["Debilidades"]
+            resistencias = i["Resistencias"]
+            descripcion = i["Descripcion"]
+            monstruo = Monstruo(nombre,debilidades,resistencias,descripcion)
+            monstruo.setComentario(i["Comentario"])
+            monstruos.append(monstruo)
 
         for i in monstruos:
             print(i)
-
-    def addAComent(self, comentario:str,monstruo:Monstruo):
-        monstruo.setComentario(comentario)
-        return monstruo
