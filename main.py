@@ -33,6 +33,8 @@ if eleccion0=="1":
         pass
 elif eleccion0=="2":
     resultado = MHRecorderGuardador().getSavedMonstruos()
+    for i in resultado:
+        print(i)
 elif eleccion0=="3":
     eleccion4 = input("Por que quieres buscar...?\n1.- Por nombre.\n2.- Por Debilidad.\n3.- Por Resistencia.\n")
     if eleccion4=="1":

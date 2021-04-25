@@ -138,6 +138,4 @@ class MHRecorderGuardador(MHRecorder):
             monstruo = Monstruo(nombre,debilidades,resistencias,descripcion)
             monstruo.setComentario(i["Comentario"])
             monstruos.append(monstruo)
-
-        for i in monstruos:
-            print(i)
+        return monstruos
