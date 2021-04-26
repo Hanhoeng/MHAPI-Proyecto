@@ -35,12 +35,38 @@ class TestRequest(unittest.TestCase):
         x=MHRecorderGuardador().checkIfExist(d)
         self.assertEqual(x, True)
 
-    def test_5(self):
+    def test_5(self):#le dare una checada
         debilidad="fire"
         x=MHConsulterBuscador().getMonsterByDebilidad(debilidad)
-        print(type(x))
-        d=("data_prueba.txt", "w")
-        self.assertEqual(x, True)
+        debilidad2="dragon"
+        xp=MHConsulterBuscador().getMonsterByDebilidad(debilidad2)
+        
+        self.assertNotEqual(x, xp)
+    def test_6(self):#le dare una checada
+        a = open ("data_prueba.txt",'w')
+        debilidad="fire"
+        d=MHConsulterBuscador().getMonsterByDebilidad(debilidad)
+        n=[]
+        for i in d:
+            n.append(i)
+        a.write(str(n))
+        a.close()
+        data_text2=open("data_prueba.txt","r")
+        d1=data_text2.read()
+        data_text2.close()
+        a = open ("data_prueba5.txt",'w')
+        debilidad2="fire"
+        xp=MHConsulterBuscador().getMonsterByDebilidad(debilidad2)
+        m=[]
+        for i in d:
+            m.append(i)
+        a.write(str(m))
+        a.close()
+        data_text5=open("data_prueba5.txt","r")
+        d2=data_text5.read()
+        data_text5.close()
+        
+        self.assertEqual(d1, d2)
 
 if __name__ == "__main__":
     unittest.main()
