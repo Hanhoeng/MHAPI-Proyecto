@@ -48,9 +48,6 @@ class Monstruo():
 
         
 class MHRecorder(ABC):
-    mongo_client = MongoClient(host="localhost",port=27017)
-    db = mongo_client["MHConsulter"]
-    col = db["Monster"]
 
     #listo
     @abstractmethod
@@ -70,9 +67,6 @@ class MHRecorder(ABC):
     #listo
     @abstractmethod
     def getRandomMonster(self) -> Monstruo:
-        pass
-
-    def addAComent(self, comentario) -> Monstruo:
         pass
 
 class MHRecorderGuardador(MHRecorder):
