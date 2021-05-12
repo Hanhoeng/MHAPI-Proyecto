@@ -1,6 +1,3 @@
-from re import X
-
-from pymongo.encryption import _MONGOCRYPTD_TIMEOUT_MS
 from MHRecorder import MHRecorderGuardador
 from MHConsulterInterface import MHConsulterBuscador
 

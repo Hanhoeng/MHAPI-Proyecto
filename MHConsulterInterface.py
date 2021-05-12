@@ -1,8 +1,10 @@
 from pymongo import MongoClient
 from abc import ABC, abstractmethod
+from Monster import Monstruo
 
 # Entidades
 ## Monstruos
+'''
 class Monstruo():
     def __init__(self, nombre:str,debilidades:list,resistencia:list,descripcion:str):
         self.nombre = nombre
@@ -41,7 +43,7 @@ class Monstruo():
         self.cadena += "Descripción:\n\t{}\n".format(self.descripcion)
         self.cadena += "Comentario:\n\t{}\n".format(self.comentario)
         return self.cadena
-
+'''
 # Interfaces
 class MHConsulter(ABC):
 

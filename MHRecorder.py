@@ -3,9 +3,12 @@ from pymongo import MongoClient
 import json
 import requests
 import random
+from Monster import Monstruo
+
 
 # Entidades
 ## Monstruos
+'''
 class Monstruo():
     def __init__(self, nombre:str,debilidades:list,resistencia:list,descripcion:str):
         self.nombre = nombre
@@ -44,7 +47,7 @@ class Monstruo():
         self.cadena += "Descripción:\n\t{}\n".format(self.descripcion)
         self.cadena += "Comentario:\n\t{}\n".format(self.comentario)
         return self.cadena
-
+'''
 
         
 class MHRecorder(ABC):
