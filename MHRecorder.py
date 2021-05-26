@@ -95,6 +95,24 @@ class MHRecorderGuardador(MHRecorder):
         monstruo = Monstruo(nombre,debilidades,resistencias,descripcion)
         
         return monstruo
+    
+    def getRMonster(self, id:int):
+        #id = random.randint(1,60)
+        respuesta = requests.get("https://mhw-db.com/monsters/{}".format(id))
+        respuesta = respuesta.text
+        respuesta = json.loads(respuesta)
+        #print(respuesta)
+        nombre = respuesta["name"]
+        debilidades = []
+        for i in range(0,len(respuesta["weaknesses"])):
+            debilidades.append(respuesta["weaknesses"][i]["element"])
+        resistencias = []
+        for i in range(0,len(respuesta["resistances"])):
+            resistencias.append(respuesta["resistances"][i]["element"])
+        descripcion = respuesta["description"]
+        monstruo = Monstruo(nombre,debilidades,resistencias,descripcion)
+        
+        return monstruo
 
     def setMonstruo(self, monstruo: Monstruo):
         nombre = monstruo.getNombre()
