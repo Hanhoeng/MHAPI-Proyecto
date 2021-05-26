@@ -1,3 +1,6 @@
+import mock
+from mock import Mock
+from pymongo import MongoClient
 import unittest
 from unittest.mock import patch
 from unittest.mock import patch, MagicMock
@@ -33,14 +36,14 @@ class TestRequest(unittest.TestCase):
         x=MHRecorderGuardador().checkIfExist(d)
         self.assertEqual(x, True)
 
-    def test_5(self):#le dare una checada
+    def test_5(self):
         debilidad="fire"
         x=MHConsulterBuscador().getMonsterByDebilidad(debilidad)
         debilidad2="dragon"
         xp=MHConsulterBuscador().getMonsterByDebilidad(debilidad2)
         self.assertNotEqual(x, xp)
 
-    def test_6(self):#le dare una checada
+    def test_6(self):
         a = open ("data_prueba.txt",'w')
         debilidad="fire"
         d=MHConsulterBuscador().getMonsterByDebilidad(debilidad)
@@ -66,7 +69,7 @@ class TestRequest(unittest.TestCase):
         
         self.assertNotEqual(d1, d2)
 
-    def test_7(self):#le dare una checada
+    def test_7(self):
         a = open ("data_prueba.txt",'w')
         debilidad="fire"
         d=MHConsulterBuscador().getMonsterByDebilidad(debilidad)
@@ -107,20 +110,52 @@ class TestRequest(unittest.TestCase):
         self.assertEqual(MHRecorderGuardador().checkIfExist(mock_response),False)
 
     @patch("Monster.Monstruo")
-    def test_11(self,mock_response):#Se revisara mañana jaja
-        expected = [
-            {"Nombre": "Shamos",
-            "Debilidades":["fire","thunder"],
-            "Resistencias":[],
-            "Descripción":"Small nocturnal monsters. They're particularly vulnerable to Tzitzi-Ya-Ku's blinding flash, but have been known to gang up on enemies.",
-            "Comentario":"Prueba de nuez"}
-        ]        
-        data_text35=open("prueba2.txt","r")
-        d22=data_text35.read()
-        data_text35.close()
-        mock_response=MHConsulterBuscador().getMonsterByName("Shamos")
-        print(mock_response)
-        self.assertEqual(str(mock_response), d22)
+    def test_11(self,mock_response):
+        expected = "Nombre:\n\tShamos\nDebilidades:\n\tfire\n\tthunder\nResistencias:\nDescripción:\n\tSmall nocturnal monsters. They're particularly vulnerable to Tzitzi-Ya-Ku's blinding flash, but have been known to gang up on enemies.\nComentario:\n\tPrueba de nuez"
+        mock_response=str(MHConsulterBuscador().getMonsterByName("Shamos"))
+        self.assertEqual(mock_response, expected)
+
+    @patch("Monster.Monstruo")
+    def test_12(self,mock_response):
+        expected = "Nombre:\n\tShamos\nDebilidades:\n\tfire\n\tthunder\nResistencias:\nDescripción:\n\tSmall nocturnal monsters. They're particularly vulnerable to Tzitzi-Ya-Ku's blinding flash, but have been known to gang up on enemies.\nComentario:\n\tPrueba de nuez"
+        mock_response=str(MHConsulterBuscador().getMonsterByName("Behemoth"))
+        self.assertNotEqual(mock_response, expected)
+
+    @mock.patch("pymongo.mongo_client.MongoClient")
+    def test_13(self,mock_method):
+        result=('localhost', 27017)
+        mock_method =MHConsulterBuscador().mongo_client.address
+        self.assertEqual(mock_method, result)
+
+    @mock.patch("pymongo.mongo_client.MongoClient")
+    def test_14(self,mock_method):
+        result=('Mongo', 00000)
+        mock_method =MHConsulterBuscador().mongo_client.address
+        self.assertNotEqual(mock_method, result)
+    
+    @mock.patch("pymongo.mongo_client.MongoClient")
+    def test_15(self,mock_method):
+        result="MongoClient(host=['localhost:27017'], document_class=dict, tz_aware=False, connect=True)"
+        mock_method = str(MHConsulterBuscador().mongo_client)
+        self.assertEqual(mock_method, result)
+
+    @mock.patch("MHConsulterInterface.MHConsulterBuscador.getMonsterByName")
+    def test_16(self,mock_response):
+        debilidad16 = "fire"
+        mock_response = MagicMock()
+        mock_response = MHConsulterBuscador().getMonsterByDebilidad(debilidad16)
+        actual =   MHRecorderGuardador().checkIfExist(mock_response[0])
+        self.assertEqual(actual, True)
+
+    @mock.patch("MHConsulterInterface.MHConsulterBuscador.getMonsterByResistencia")
+    def test_17(self,mock_response):
+        debilidad17 = "fire"
+        mock_response.getMonsterByResistencia.return_value= []
+        das= mock_response.getMonsterByResistencia(debilidad17) 
+           
+        self.assertEqual(das, [])
+
+    
 
 if __name__ == "__main__":
     unittest.main()
