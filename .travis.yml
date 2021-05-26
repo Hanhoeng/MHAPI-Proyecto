@@ -11,6 +11,7 @@ services:
 before_script:
   - pip3 install pytest
   - pip3 install pymongo
+  - pip3 install requests
 
 script:
   - pytest Test.py
