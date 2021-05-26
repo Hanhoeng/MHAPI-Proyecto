@@ -72,6 +72,10 @@ class MHRecorder(ABC):
     def getRandomMonster(self) -> Monstruo:
         pass
 
+    @abstractmethod
+    def getRMonster(self,id:int) -> Monstruo:
+        pass
+
 class MHRecorderGuardador(MHRecorder):
     ### ATENCION AQUI: poner el puerto de tu base de mongo
     mongo_client = MongoClient(host="localhost",port=27017)
