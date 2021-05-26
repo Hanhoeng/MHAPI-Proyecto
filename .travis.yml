@@ -3,10 +3,10 @@ language: python
 dist: focal
 
 python:
-  - 3.8.2
+  - "3.8.2"
 
 services:
   - mongodb
 
 script:
-  - "python3 Test.py"
+  - pytests
