@@ -9,4 +9,4 @@ services:
   - mongodb
 
 script:
-  - "python3 Test.py"
+  - pytests
