@@ -8,5 +8,9 @@ python:
 services:
   - mongodb
 
+before_script:
+  - pip3 install pytest
+  - pip3 install pymongo
+
 script:
   - pytests
